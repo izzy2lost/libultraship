@@ -1,12 +1,21 @@
 include(../cmake/cvars.cmake)
 
 add_library(libultraship STATIC)
+
+add_library(libultraship::libultraship ALIAS libultraship)
+
 set_target_properties(libultraship PROPERTIES PREFIX "")
 set_property(TARGET libultraship PROPERTY CXX_STANDARD 20)
 # Need to set C11 for libgfxd (_Alignas)
 set_property(TARGET libultraship PROPERTY C_STANDARD 11)
 
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+
+target_include_directories(libultraship PUBLIC
+    ${INCLUDE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 option(USE_OPENGLES "Enable GLES3" OFF)
 option(GFX_DEBUG_DISASSEMBLER "Enable libgfxd" OFF)
 
